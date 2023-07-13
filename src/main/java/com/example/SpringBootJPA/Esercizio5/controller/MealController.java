@@ -2,10 +2,12 @@ package com.example.SpringBootJPA.Esercizio5.controller;
 
 import com.example.SpringBootJPA.Esercizio5.entity.Ingredient;
 import com.example.SpringBootJPA.Esercizio5.entity.Meal;
+import com.example.SpringBootJPA.Esercizio5.model.MealDto;
 import com.example.SpringBootJPA.Esercizio5.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.SpringBootJPA.Esercizio5.model.MealDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,5 +73,15 @@ public class MealController {
     @GetMapping("winter-meals")
     public ResponseEntity<List<Meal>> getWinterMeals(){
         return ResponseEntity.ok(mealService.getWinterMeals());
+    }
+
+    @GetMapping("/get-by-id-dto")                         //dto Pasquale
+    public MealDto getById(@RequestParam Long id){
+        return mealService.getById(id);
+    }
+
+    @GetMapping("get-all-dto")
+    public List<MealDto> getAll(){
+        return mealService.getAll();
     }
 }
