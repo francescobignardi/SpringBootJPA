@@ -4,6 +4,8 @@ import com.example.SpringBootJPA.AuthorsBooks.dto.CreateAuthorsDto;
 import com.example.SpringBootJPA.AuthorsBooks.dto.GetAuthorsDto;
 import com.example.SpringBootJPA.AuthorsBooks.entity.Authors;
 import com.example.SpringBootJPA.AuthorsBooks.service.AuthorsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,8 @@ public class AuthorsController {
     }
 
     @GetMapping("/getAllAuthors")
+    @Operation(description = "Questo metodo restituisce tutti gli autori presenti nel database")
+    @ApiResponse
     public List<GetAuthorsDto> getAllAuthors(){
         return authorsService.getAllAuthors();
     }
@@ -43,6 +47,16 @@ public class AuthorsController {
     @DeleteMapping("/deleteAuthorById")
     public GetAuthorsDto deleteAuthor(@RequestParam Integer id){
         return authorsService.deleteAuthor(id);
+    }
+
+    @PutMapping("/assignBookToAuthor")
+    public CreateAuthorsDto assignBookToAuthor(@RequestParam Integer idBook, @RequestParam Integer idAuthor){
+        return authorsService.assignBookToAuthor(idBook, idAuthor);
+    }
+
+    @PutMapping("/assignPHToAuthor")
+    public CreateAuthorsDto assignPHToAuthor(@RequestParam Integer idPH, @RequestParam Integer idAuthor){
+        return authorsService.assignPHToAuthor(idPH, idAuthor);
     }
 
 }

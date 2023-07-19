@@ -2,9 +2,11 @@ package com.example.SpringBootJPA.AuthorsBooks.entity;
 
 import com.example.SpringBootJPA.AuthorsBooks.enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
+
 
 @Entity
 @Table(name = "Authors")
@@ -18,11 +20,15 @@ public class Authors {
     @Column(name = "nationality")
     private String nationality;
     @ManyToOne
-    @JoinColumn(name = "book_id")
     @JsonBackReference
+    @JoinColumn(name = "book_id")
     private Books books;
     @Column(name = "status", columnDefinition = "ACTIVE")
     private StatusEnum status;
+    @ManyToMany(mappedBy = "authors")
+    @JsonManagedReference
+    private List<PublishingHouse> publishingHouseList;
+
 
     public Authors(String name, String nationality, Books books) {
         this.name = name;
@@ -70,5 +76,13 @@ public class Authors {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public List<PublishingHouse> getPublishingHouseList() {
+        return publishingHouseList;
+    }
+
+    public void setPublishingHouseList(List<PublishingHouse> publishingHouseList) {
+        this.publishingHouseList = publishingHouseList;
     }
 }
